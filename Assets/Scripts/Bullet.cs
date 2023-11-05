@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class Bullet : MonoBehaviour
 {
+    public GameObject explosion;
+
     public float speed = 20;
     public float lifeTime = 5;
 
@@ -13,7 +15,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, lifeTime);
+        Invoke(nameof(Explode), lifeTime);
     }
 
     void Update()
@@ -29,6 +31,12 @@ public class Bullet : MonoBehaviour
             var damage = Random.Range(minDamage, maxDamage + 1);
             health.TakeDamage(damage);
         }
+        Explode();
+    }
+
+    void Explode()
+    {
+        Instantiate(explosion, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }
